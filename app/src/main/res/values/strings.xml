@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">SheduleFirebaseApp</string>
+    <string name="time_example">08:30-10:00</string> //заглушка времени
+    <string name="room_example">301A</string> //заглушка аудитории
+    <string name="subject_example">Моделирование систем массового обслуживания</string> //заглушка предмета
+    <string name="teacher_example">Ильин И.И.</string> //заглушка учителя
+    //главное меню
+    <string name="homework">Домашнее задание</string>
+    <string name="teachers">Преподаватели</string>
+    <string name="exams">Экзамены</string>
+    <string name="about">О программе</string>
+    <string name="subjects_title">Расписание на неделю</string>
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">Вторник</string>
+    <string name="wednesday">Среда</string>
+    <string name="thursday">Четверг</string>
+    <string name="friday">Пятница</string>
+    <string name="saturday">Суббота</string>
+    ///
+    <string name="home_button">На сегодня</string> //кнопка на toolbar для того, чтобы открыть раписание на сегодня
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/homework"
+        android:id="@+id/hw"/>
+    <item android:title="@string/teachers"
+          android:id="@+id/teach"/>
+    <item android:title="@string/exams"
+          android:id="@+id/ex"/>
+    <item android:title="@string/about"
+          android:id="@+id/ab"/>
+
+<item android:title="@string/subjects_title">
+    <menu>
+        <item android:title="@string/monday"
+              android:id="@+id/md"/>
+        <item android:title="@string/tuesday"
+              android:id="@+id/tud"/>
+        <item android:title="@string/wednesday"
+              android:id="@+id/wd"/>
+        <item android:title="@string/thursday"
+              android:id="@+id/thd"/>
+        <item android:title="@string/friday"
+              android:id="@+id/fd"/>
+        <item android:title="@string/saturday"
+              android:id="@+id/sd"/>
+    </menu>
+</item>
+
+</menu>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "897641825916",
+    "firebase_url": "https://scheduleapp-b011b.firebaseio.com",
+    "project_id": "scheduleapp-b011b",
+    "storage_bucket": "scheduleapp-b011b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897641825916:android:f8e11efab0fd1662",
+        "android_client_info": {
+          "package_name": "com.example.nix.shedulefirebaseapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897641825916-v3of2d1jof9o3n3l91r47dv6slpie4nb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm317WOpzWBz7vkB81jubJifDX01KL3qs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
