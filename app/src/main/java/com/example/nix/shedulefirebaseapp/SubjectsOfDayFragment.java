@@ -19,10 +19,19 @@ public class SubjectsOfDayFragment extends Fragment {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     public static int int_items = 2;
+    public final static String DAY  = "DAY";
+    public int i;
+    private Bundle mBundle;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            i = bundle.getInt(MainActivity.DATA, 0);
+        }
+        mBundle = new Bundle();
+        mBundle.putInt(DAY, i);
     }
 
     @Nullable
@@ -48,6 +57,8 @@ public class SubjectsOfDayFragment extends Fragment {
         public Fragment getItem(int position){
             Fragment Even = new EvenSubjects();
             Fragment Odd = new OddSubjects();
+            Even.setArguments(mBundle);
+            Odd.setArguments(mBundle);
             switch (position){
                 case 0 : return Odd;
                 case 1 : return Even;

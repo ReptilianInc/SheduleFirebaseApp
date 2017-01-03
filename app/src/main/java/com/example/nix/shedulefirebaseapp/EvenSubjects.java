@@ -24,9 +24,15 @@ public class EvenSubjects extends Fragment {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager llm;
     private ProgressBar mProgressBar;
+    private String ROOT;
+    public int i;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            i = bundle.getInt(SubjectsOfDayFragment.DAY, 0);
+        }
     }
 
     @Nullable
@@ -37,12 +43,13 @@ public class EvenSubjects extends Fragment {
         mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
         llm = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(llm);
+        checkRoot(i);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mAdapter = new FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder>(
                 Subject.class,
                 R.layout.subject_card,
                 SubjectAdapter.MyViewHolder.class,
-                mDatabaseReference.child("mondayeven")
+                mDatabaseReference.child(ROOT)
         ) {
             @Override
             protected void populateViewHolder(SubjectAdapter.MyViewHolder viewHolder, Subject model, int position) {
@@ -63,5 +70,30 @@ public class EvenSubjects extends Fragment {
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.setAdapter(mAdapter);
         return v;
+    }
+    private void checkRoot(int code){
+        switch (code){
+            case 0:
+                ROOT = "mondayeven";
+                break;
+            case 1:
+                ROOT = "tuesdayeven";
+                break;
+            case 2:
+                ROOT = "wednesdayeven";
+                break;
+            case 3:
+                ROOT = "thursdayeven";
+                break;
+            case 4:
+                ROOT = "fridayeven";
+                break;
+            case 5:
+                ROOT = "saturdayeven";
+                break;
+            default:
+                ROOT = "mondayeven";
+                break;
+        }
     }
 }

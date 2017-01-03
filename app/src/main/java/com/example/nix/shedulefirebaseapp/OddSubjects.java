@@ -23,9 +23,15 @@ public class OddSubjects extends Fragment {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager llm;
     private ProgressBar mProgressBar;
+    private String ROOT;
+    public int i;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            i = bundle.getInt(SubjectsOfDayFragment.DAY, 0);
+        }
     }
 
     @Nullable
@@ -36,12 +42,13 @@ public class OddSubjects extends Fragment {
         mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
         llm = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(llm);
+        checkRoot(i);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mAdapter = new FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder>(
                 Subject.class,
                 R.layout.subject_card,
                 SubjectAdapter.MyViewHolder.class,
-                mDatabaseReference.child("mondayodd")
+                mDatabaseReference.child(ROOT)
         ) {
             @Override
             protected void populateViewHolder(SubjectAdapter.MyViewHolder viewHolder, Subject model, int position) {
@@ -62,5 +69,30 @@ public class OddSubjects extends Fragment {
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.setAdapter(mAdapter);
         return v;
+    }
+    private void checkRoot(int code){
+        switch (code){
+            case 0:
+                ROOT = "mondayodd";
+                break;
+            case 1:
+                ROOT = "tuesdayodd";
+                break;
+            case 2:
+                ROOT = "wednesdayodd";
+                break;
+            case 3:
+                ROOT = "thursdayodd";
+                break;
+            case 4:
+                ROOT = "fridayodd";
+                break;
+            case 5:
+                ROOT = "saturdayodd";
+                break;
+            default:
+                ROOT = "mondayodd";
+                break;
+        }
     }
 }

@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private FragmentManager fm;
     private Fragment fragment;
+    private int day; // перменная для передачи данных от фрагмента к фрагменту
+    public final static String DATA = "DAY_OF_WEEK";
+    private Bundle mBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        mBundle = new Bundle();
         mToolbar.setTitle("Сегодня");
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView)findViewById(R.id.navigationView);
@@ -46,7 +50,75 @@ public class MainActivity extends AppCompatActivity {
                                 .remove(fragment)
                                 .commit();
                         mToolbar.setTitle("Понедельник");
+                        day = 0;
+                        mBundle.putInt(DATA, day);
                         fragment = new SubjectsOfDayFragment();
+                        fragment.setArguments(mBundle);
+                        fm.beginTransaction()
+                                .add(R.id.containerView, fragment)
+                                .commit();
+                        return true;
+                    case R.id.tud:
+                        fm.beginTransaction()
+                                .remove(fragment)
+                                .commit();
+                        mToolbar.setTitle("Вторник");
+                        day = 1;
+                        mBundle.putInt(DATA, day);
+                        fragment = new SubjectsOfDayFragment();
+                        fragment.setArguments(mBundle);
+                        fm.beginTransaction()
+                                .add(R.id.containerView, fragment)
+                                .commit();
+                        return true;
+                    case R.id.wd:
+                        fm.beginTransaction()
+                                .remove(fragment)
+                                .commit();
+                        mToolbar.setTitle("Среда");
+                        day = 2;
+                        mBundle.putInt(DATA, day);
+                        fragment = new SubjectsOfDayFragment();
+                        fragment.setArguments(mBundle);
+                        fm.beginTransaction()
+                                .add(R.id.containerView, fragment)
+                                .commit();
+                        return true;
+                    case R.id.thd:
+                        fm.beginTransaction()
+                                .remove(fragment)
+                                .commit();
+                        mToolbar.setTitle("Четверг");
+                        day = 3;
+                        mBundle.putInt(DATA, day);
+                        fragment = new SubjectsOfDayFragment();
+                        fragment.setArguments(mBundle);
+                        fm.beginTransaction()
+                                .add(R.id.containerView, fragment)
+                                .commit();
+                        return true;
+                    case R.id.fd:
+                        fm.beginTransaction()
+                                .remove(fragment)
+                                .commit();
+                        mToolbar.setTitle("Пятница");
+                        day = 4;
+                        mBundle.putInt(DATA, day);
+                        fragment = new SubjectsOfDayFragment();
+                        fragment.setArguments(mBundle);
+                        fm.beginTransaction()
+                                .add(R.id.containerView, fragment)
+                                .commit();
+                        return true;
+                    case R.id.sd:
+                        fm.beginTransaction()
+                                .remove(fragment)
+                                .commit();
+                        mToolbar.setTitle("Суббота");
+                        day = 5;
+                        mBundle.putInt(DATA, day);
+                        fragment = new SubjectsOfDayFragment();
+                        fragment.setArguments(mBundle);
                         fm.beginTransaction()
                                 .add(R.id.containerView, fragment)
                                 .commit();
