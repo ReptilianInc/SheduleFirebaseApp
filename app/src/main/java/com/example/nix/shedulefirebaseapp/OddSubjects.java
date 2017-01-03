@@ -40,6 +40,7 @@ public class OddSubjects extends Fragment {
         View v = inflater.inflate(R.layout.content_fragment,container,false);
         mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar);
         mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
+        mRecyclerView.setBackgroundColor(getResources().getColor(R.color.colorGray));
         llm = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(llm);
         checkRoot(i);

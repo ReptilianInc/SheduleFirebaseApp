@@ -127,8 +127,28 @@ public class MainActivity extends AppCompatActivity {
                         fm.beginTransaction()
                                 .remove(fragment)
                                 .commit();
-                        mToolbar.setTitle("Домашняя работа");
+                        mToolbar.setTitle("Домашнее задание");
                         fragment = new HomeWorkFragment();
+                        fm.beginTransaction()
+                                .add(R.id.containerView, fragment)
+                                .commit();
+                        return true;
+                    case R.id.teach:
+                        fm.beginTransaction()
+                                .remove(fragment)
+                                .commit();
+                        mToolbar.setTitle("Преподаватели");
+                        fragment = new TeachersFragment();
+                        fm.beginTransaction()
+                                .add(R.id.containerView, fragment)
+                                .commit();
+                        return true;
+                    case R.id.ex:
+                        fm.beginTransaction()
+                                .remove(fragment)
+                                .commit();
+                        mToolbar.setTitle("Экзамены");
+                        fragment = new ExamsFragment();
                         fm.beginTransaction()
                                 .add(R.id.containerView, fragment)
                                 .commit();

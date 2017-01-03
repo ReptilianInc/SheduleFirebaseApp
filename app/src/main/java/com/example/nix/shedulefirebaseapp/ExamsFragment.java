@@ -18,39 +18,35 @@ import com.google.firebase.database.FirebaseDatabase;
  * Created by Nix on 03.01.2017.
  */
 
-public class EvenSubjects extends Fragment {
+public class ExamsFragment extends Fragment {
     private DatabaseReference mDatabaseReference;
     private FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder> mAdapter;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager llm;
     private ProgressBar mProgressBar;
-    private String ROOT;
-    public int i;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = this.getArguments();
-        if(bundle != null){
-            i = bundle.getInt(SubjectsOfDayFragment.DAY, 0);
-        }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.content_fragment,container,false);
+
         mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar);
         mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
         mRecyclerView.setBackgroundColor(getResources().getColor(R.color.colorGray));
         llm = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(llm);
-        checkRoot(i);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mAdapter = new FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder>(
                 Subject.class,
                 R.layout.subject_card,
                 SubjectAdapter.MyViewHolder.class,
-                mDatabaseReference.child(ROOT)
+                mDatabaseReference.child("examstable")
         ) {
             @Override
             protected void populateViewHolder(SubjectAdapter.MyViewHolder viewHolder, Subject model, int position) {
@@ -71,30 +67,5 @@ public class EvenSubjects extends Fragment {
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.setAdapter(mAdapter);
         return v;
-    }
-    private void checkRoot(int code){
-        switch (code){
-            case 0:
-                ROOT = "mondayeven";
-                break;
-            case 1:
-                ROOT = "tuesdayeven";
-                break;
-            case 2:
-                ROOT = "wednesdayeven";
-                break;
-            case 3:
-                ROOT = "thursdayeven";
-                break;
-            case 4:
-                ROOT = "fridayeven";
-                break;
-            case 5:
-                ROOT = "saturdayeven";
-                break;
-            default:
-                ROOT = "mondayeven";
-                break;
-        }
     }
 }

@@ -17,7 +17,7 @@
         android:background="@color/colorPrimary"
         android:id="@+id/toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="Расписание" />
+        app:title="Расписание"/>
 
 <android.support.v4.widget.DrawerLayout
     android:layout_height="match_parent"
