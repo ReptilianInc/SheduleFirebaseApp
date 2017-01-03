@@ -30,9 +30,6 @@
         android:layout_height="match_parent"
         android:id="@+id/containerView"
         android:background="@color/colorGray">
-
-        <include layout="@layout/subject_list"/>
-
     </FrameLayout>
 
 <android.support.design.widget.NavigationView

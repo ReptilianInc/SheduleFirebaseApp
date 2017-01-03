@@ -16,7 +16,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewHo
 
     private List<Subject> subjectsList;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView title, teacher, room, time;
         public MyViewHolder(View view) {
             super(view);

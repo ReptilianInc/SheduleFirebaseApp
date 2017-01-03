@@ -6,8 +6,6 @@
           android:id="@+id/teach"/>
     <item android:title="@string/exams"
           android:id="@+id/ex"/>
-    <item android:title="@string/about"
-          android:id="@+id/ab"/>
 
 <item android:title="@string/subjects_title">
     <menu>
