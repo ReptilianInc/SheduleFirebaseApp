@@ -26,10 +26,10 @@ public class SubjectLab {
 
     private SubjectLab(Context context){
         mSubjects = new ArrayList<>();
-        Subject subject1 = new Subject("Моделирование систем массового обслуживания", "08:30-10:00", "301A", "Ильин В.А.", 2, 1);
-        Subject subject2 = new Subject("Правоведение", "10:10-11:40", "501A", "Иванова В.А.", 2, 1);
-        Subject subject3 = new Subject("Базы данных", "11:50-13:20", "301A", "Ололоев В.А.", 2, 1);
-        Subject subject4 = new Subject("Базы данных", "13:50-15:20", "301A", "Ололоев В.А.", 2, 1);
+        Subject subject1 = new Subject("Моделирование систем массового обслуживания", "08:30-10:00", "301A", "Ильин В.А.");
+        Subject subject2 = new Subject("Правоведение", "10:10-11:40", "501A", "Иванова В.А.");
+        Subject subject3 = new Subject("Базы данных", "11:50-13:20", "301A", "Ололоев В.А.");
+        Subject subject4 = new Subject("Базы данных", "13:50-15:20", "301A", "Ололоев В.А.");
         mSubjects.add(subject1);
         mSubjects.add(subject2);
         mSubjects.add(subject3);

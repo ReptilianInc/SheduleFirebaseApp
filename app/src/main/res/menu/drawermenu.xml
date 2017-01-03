@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/homework"
-        android:id="@+id/hw"/>
+        android:id="@+id/hw"
+        android:icon="@mipmap/ic_chrome_reader_mode_black_24dp"/>
     <item android:title="@string/teachers"
-          android:id="@+id/teach"/>
+          android:id="@+id/teach"
+        android:icon="@mipmap/ic_account_box_black_24dp"/>
     <item android:title="@string/exams"
-          android:id="@+id/ex"/>
+          android:id="@+id/ex"
+        android:icon="@mipmap/ic_assignment_black_24dp"/>
 
 <item android:title="@string/subjects_title">
     <menu>

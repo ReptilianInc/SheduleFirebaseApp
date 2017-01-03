@@ -18,28 +18,40 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private Toolbar mToolbar;
+    private FragmentManager fm;
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.containerView);
-        if (fragment == null){
-            fragment = new TodayFragment();
-            fm.beginTransaction()
-                    .add(R.id.containerView,fragment)
-                    .commit();
-        }
+        fm = getSupportFragmentManager();
+        fragment = fm.findFragmentById(R.id.containerView);
+        fragment = new TodayFragment();
+        fm.beginTransaction()
+                .add(R.id.containerView,fragment)
+                .commit();
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        mToolbar.setTitle("Сегодня");
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView)findViewById(R.id.navigationView);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 mDrawerLayout.closeDrawers();
-                // пока пусто
+                switch (menuItem.getItemId()){
+                    case R.id.md:
+                        fm.beginTransaction()
+                                .remove(fragment)
+                                .commit();
+                        mToolbar.setTitle("Понедельник");
+                        fragment = new SubjectsOfDayFragment();
+                        fm.beginTransaction()
+                                .add(R.id.containerView, fragment)
+                                .commit();
+                        return true;
+                }
                 return false;
             }
         });
@@ -54,5 +66,22 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.home_button:
+                fm.beginTransaction()
+                        .remove(fragment)
+                        .commit();
+                mToolbar.setTitle("Сегодня");
+                fragment = new TodayFragment();
+                fm.beginTransaction()
+                        .add(R.id.containerView, fragment)
+                        .commit();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

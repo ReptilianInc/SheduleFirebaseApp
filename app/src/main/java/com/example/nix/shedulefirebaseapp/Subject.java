@@ -11,19 +11,15 @@ public class Subject { //предмет, объект модели
     private String mTime;
     private String mRoom;
     private String mTeacher;
-    private int mDay;
-    private int mWeek;
 
     public Subject(){
         //конструктор по умолчанию
     }
-    public Subject(String title, String time, String room, String teacher, int day, int week){
+    public Subject(String title, String time, String room, String teacher){
         mTitle = title;
         mTime = time;
         mRoom = room;
         mTeacher = teacher;
-        mDay = day;
-        mWeek = week;
     }
 
     public String getTitle() {
@@ -56,21 +52,5 @@ public class Subject { //предмет, объект модели
 
     public void setTeacher(String teacher) {
         mTeacher = teacher;
-    }
-
-    public int getDay() {
-        return mDay;
-    }
-
-    public void setDay(int day) {
-        mDay = day;
-    }
-
-    public int getWeek() {
-        return mWeek;
-    }
-
-    public void setWeek(int week) {
-        mWeek = week;
     }
 }
