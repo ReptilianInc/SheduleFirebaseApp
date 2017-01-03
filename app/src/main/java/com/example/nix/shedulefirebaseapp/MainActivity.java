@@ -123,6 +123,16 @@ public class MainActivity extends AppCompatActivity {
                                 .add(R.id.containerView, fragment)
                                 .commit();
                         return true;
+                    case R.id.hw:
+                        fm.beginTransaction()
+                                .remove(fragment)
+                                .commit();
+                        mToolbar.setTitle("Домашняя работа");
+                        fragment = new HomeWorkFragment();
+                        fm.beginTransaction()
+                                .add(R.id.containerView, fragment)
+                                .commit();
+                        return true;
                 }
                 return false;
             }
