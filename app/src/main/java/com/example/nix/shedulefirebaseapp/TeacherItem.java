@@ -8,7 +8,7 @@ public class TeacherItem {
     private String mName;
     private String mAbout;
 
-    public TeacherItem(){
+    public TeacherItem(){ //не трогать!!! он нужен для firebase!
 
     }
     public TeacherItem(String name, String about) {

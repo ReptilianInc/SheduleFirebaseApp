@@ -12,7 +12,7 @@ public class Subject { //предмет, объект модели
     private String mRoom;
     private String mTeacher;
 
-    public Subject(){
+    public Subject(){ //не трогать!!! он нужен для firebase!
         //конструктор по умолчанию
     }
     public Subject(String title, String time, String room, String teacher){

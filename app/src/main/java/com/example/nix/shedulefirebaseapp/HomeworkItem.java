@@ -7,7 +7,7 @@ package com.example.nix.shedulefirebaseapp;
 public class HomeworkItem {
     private String mDescription;
 
-    public HomeworkItem() {
+    public HomeworkItem() {  //не трогать!!! он нужен для firebase!
 
     }
 
