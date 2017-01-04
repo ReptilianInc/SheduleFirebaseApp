@@ -13,7 +13,6 @@ import android.widget.ProgressBar;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -45,6 +44,8 @@ public class TodayFragment extends Fragment {
         if(bundle != null){
             l = bundle.getLong(MainActivity.WEEK, 0);
             Log.d("l in TodayFragment", l.toString());
+        }else{
+            Log.d("TodayFragment: ","bundle is null");
         }
     }
 

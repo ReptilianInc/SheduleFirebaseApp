@@ -12,13 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -62,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("week_number ", week_number.toString());
                 mBundleWeek.putLong(WEEK, week_number);
                 mToolbar.setSubtitle(week_number.toString() + " неделя");
+                fm = getSupportFragmentManager();
+                fragment = fm.findFragmentById(R.id.containerView);
+                fragment = new TodayFragment();
+                fragment.setArguments(mBundleWeek);
+                fm.beginTransaction()
+                        .add(R.id.containerView,fragment)
+                        .commit();
             }
 
             @Override
@@ -69,16 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
-        fm = getSupportFragmentManager();
-        fragment = fm.findFragmentById(R.id.containerView);
-        fragment = new TodayFragment();
-        fragment.setArguments(mBundleWeek);
-        fm.beginTransaction()
-                .add(R.id.containerView,fragment)
-                .commit();
-
+        
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView)findViewById(R.id.navigationView);
