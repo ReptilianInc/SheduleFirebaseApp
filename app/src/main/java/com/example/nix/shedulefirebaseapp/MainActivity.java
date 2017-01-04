@@ -1,5 +1,6 @@
 package com.example.nix.shedulefirebaseapp;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabaseReference = mDatabase.getReference();
     private Long week_number; //переменная для счёта недели
+    private int VISIBILITY = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
                         fm.beginTransaction()
                                 .add(R.id.containerView, fragment)
                                 .commit();
+                        VISIBILITY = 1;
+                        invalidateOptionsMenu();
                         return true;
                     case R.id.tud:
                         fm.beginTransaction()
@@ -108,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
                         fm.beginTransaction()
                                 .add(R.id.containerView, fragment)
                                 .commit();
+                        VISIBILITY = 1;
+                        invalidateOptionsMenu();
                         return true;
                     case R.id.wd:
                         fm.beginTransaction()
@@ -121,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
                         fm.beginTransaction()
                                 .add(R.id.containerView, fragment)
                                 .commit();
+                        VISIBILITY = 1;
+                        invalidateOptionsMenu();
                         return true;
                     case R.id.thd:
                         fm.beginTransaction()
@@ -134,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
                         fm.beginTransaction()
                                 .add(R.id.containerView, fragment)
                                 .commit();
+                        VISIBILITY = 1;
+                        invalidateOptionsMenu();
                         return true;
                     case R.id.fd:
                         fm.beginTransaction()
@@ -147,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
                         fm.beginTransaction()
                                 .add(R.id.containerView, fragment)
                                 .commit();
+                        VISIBILITY = 1;
+                        invalidateOptionsMenu();
                         return true;
                     case R.id.sd:
                         fm.beginTransaction()
@@ -160,6 +172,8 @@ public class MainActivity extends AppCompatActivity {
                         fm.beginTransaction()
                                 .add(R.id.containerView, fragment)
                                 .commit();
+                        VISIBILITY = 1;
+                        invalidateOptionsMenu();
                         return true;
                     case R.id.hw:
                         fm.beginTransaction()
@@ -170,6 +184,8 @@ public class MainActivity extends AppCompatActivity {
                         fm.beginTransaction()
                                 .add(R.id.containerView, fragment)
                                 .commit();
+                        VISIBILITY = 1;
+                        invalidateOptionsMenu();
                         return true;
                     case R.id.teach:
                         fm.beginTransaction()
@@ -180,6 +196,8 @@ public class MainActivity extends AppCompatActivity {
                         fm.beginTransaction()
                                 .add(R.id.containerView, fragment)
                                 .commit();
+                        VISIBILITY = 1;
+                        invalidateOptionsMenu();
                         return true;
                     case R.id.ex:
                         fm.beginTransaction()
@@ -190,6 +208,12 @@ public class MainActivity extends AppCompatActivity {
                         fm.beginTransaction()
                                 .add(R.id.containerView, fragment)
                                 .commit();
+                        VISIBILITY = 1;
+                        invalidateOptionsMenu();
+                        return true;
+                    case R.id.about_button:
+                        Intent intent = new Intent(getApplication(), ActivityAbout.class);
+                        startActivity(intent);
                         return true;
                 }
                 return false;
@@ -205,6 +229,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        MenuItem toggleItem = menu.findItem(R.id.home_button);
+        if (VISIBILITY == 0){
+            toggleItem.setVisible(false);
+        }else{
+            toggleItem.setVisible(true);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -212,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.home_button:
+                VISIBILITY = 0;
                 fm.beginTransaction()
                         .remove(fragment)
                         .commit();
@@ -222,6 +253,8 @@ public class MainActivity extends AppCompatActivity {
                 fm.beginTransaction()
                         .add(R.id.containerView, fragment)
                         .commit();
+                mDrawerLayout.closeDrawers();
+                invalidateOptionsMenu();
                 break;
         }
         return super.onOptionsItemSelected(item);

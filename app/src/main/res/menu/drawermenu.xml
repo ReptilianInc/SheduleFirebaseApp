@@ -10,7 +10,8 @@
           android:id="@+id/ex"
         android:icon="@mipmap/ic_assignment_black_24dp"/>
 
-<item android:title="@string/subjects_title">
+<item android:title="@string/subjects_title"
+    android:checkable="true">
     <menu>
         <item android:title="@string/monday"
               android:id="@+id/md"/>
@@ -26,5 +27,13 @@
               android:id="@+id/sd"/>
     </menu>
 </item>
-
+<group android:id="@+id/gr2"
+    android:enabled="true"
+    android:checkableBehavior="none">
+    <item android:id="@+id/about_button"
+          android:title="@string/about_button"
+          android:orderInCategory="2"
+          android:icon="@mipmap/ic_info_white_36dp">
+    </item>
+</group>
 </menu>

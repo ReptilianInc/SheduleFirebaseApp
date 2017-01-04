@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">Расписание</string>
-    <string name="time_example">08:30-10:00</string> //заглушка времени
-    <string name="room_example">301A</string> //заглушка аудитории
-    <string name="subject_example">Моделирование систем массового обслуживания</string> //заглушка предмета
-    <string name="teacher_example">Ильин И.И.</string> //заглушка учителя
+    <string name="about_text">Расписание для студентов группы 3ВТИ - 006 университета МАТИ. Спасибо за использование!
+        Copyright &#169; Nikita Karpunin, 2017</string>
+    <string name="time_example">08:30-10:00</string>
+    //заглушка времени
+    <string name="room_example">301A</string>
+    //заглушка аудитории
+    <string name="subject_example">Моделирование систем массового обслуживания</string>
+    //заглушка предмета
+    <string name="teacher_example">Ильин И.И.</string>
+    //заглушка учителя
     //главное меню
     <string name="homework">Домашнее задание</string>
     <string name="teachers">Преподаватели</string>
@@ -17,5 +23,8 @@
     <string name="friday">Пятница</string>
     <string name="saturday">Суббота</string>
     ///
-    <string name="home_button">На сегодня</string> //кнопка на toolbar для того, чтобы открыть раписание на сегодня
+    <string name="home_button">На сегодня</string>
+    //кнопка на toolbar для того, чтобы открыть раписание на сегодня
+    <string name="about_button">О программе</string>
+    //кнопка на toolbar для того, чтобы открыть окно о программе
 </resources>
