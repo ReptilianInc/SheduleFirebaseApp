@@ -3,14 +3,12 @@ package com.example.nix.shedulefirebaseapp;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -20,12 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class HomeWorkFragment extends Fragment {
-    private DatabaseReference mDatabaseReference;
-    private FirebaseRecyclerAdapter<HomeworkItem, HomeWorkAdapter.MyViewHolderHomeWork> mAdapter;
-    private RecyclerView mRecyclerView;
-    private StaggeredGridLayoutManager sglm;
-    private ProgressBar mProgressBar;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +27,12 @@ public class HomeWorkFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.content_fragment,container,false);
-
-        mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar);
-        mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
-        sglm = new StaggeredGridLayoutManager(2,1);
+        final ProgressBar mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar);
+        RecyclerView mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
+        StaggeredGridLayoutManager sglm = new StaggeredGridLayoutManager(2,1);
         mRecyclerView.setLayoutManager(sglm);
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        mAdapter = new FirebaseRecyclerAdapter<HomeworkItem, HomeWorkAdapter.MyViewHolderHomeWork>(
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseRecyclerAdapter<HomeworkItem, HomeWorkAdapter.MyViewHolderHomeWork> mAdapter = new FirebaseRecyclerAdapter<HomeworkItem, HomeWorkAdapter.MyViewHolderHomeWork>(
                 HomeworkItem.class,
                 R.layout.homework_card,
                 HomeWorkAdapter.MyViewHolderHomeWork.class,

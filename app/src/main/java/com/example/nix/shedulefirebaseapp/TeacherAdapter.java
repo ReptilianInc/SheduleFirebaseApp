@@ -5,20 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import java.util.List;
 
 /**
  * Created by Nix on 03.01.2017.
  */
 
-public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.MyViewHolderTeacher> {
+class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.MyViewHolderTeacher> {
 
     private List<TeacherItem> mTeacherItems;
 
-    public static class MyViewHolderTeacher extends RecyclerView.ViewHolder{
-        public TextView name, about;
-        public MyViewHolderTeacher(View view) {
+    static class MyViewHolderTeacher extends RecyclerView.ViewHolder{
+        TextView name, about;
+        MyViewHolderTeacher(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.textview_teacher_card);
             about = (TextView) view.findViewById(R.id.textview_teacher_card_descr);

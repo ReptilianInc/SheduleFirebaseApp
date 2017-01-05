@@ -1,12 +1,14 @@
 package com.example.nix.shedulefirebaseapp;
 
-import java.util.UUID;
 
 /**
  * Created by Nix on 02.01.2017.
  */
-
-public class Subject { //предмет, объект модели
+/**
+ * лучше тут ничего не трогать. хоть Lint и говорит что это конструктор по умолчанию не используется,
+ * но если его убрать, будет ошибка
+ */
+class Subject { //предмет, объект модели
     private String mTitle;
     private String mTime;
     private String mRoom;

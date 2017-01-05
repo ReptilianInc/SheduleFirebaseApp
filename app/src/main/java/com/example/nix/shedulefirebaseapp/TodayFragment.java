@@ -20,24 +20,16 @@ import java.util.Date;
  */
 
 public class TodayFragment extends Fragment {
-
-    private DatabaseReference mDatabaseReference;
-    private FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder> mAdapter;
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager llm;
-    private ProgressBar mProgressBar;
     public Long l;
     private int day_of_week;
-    private Date mDate;
-    private Calendar mCalendar;
     private String ROOT;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
-        mDate = new Date();
-        mCalendar = Calendar.getInstance();
+        Date mDate = new Date();
+        Calendar mCalendar = Calendar.getInstance();
         mCalendar.setTime(mDate);
         day_of_week = mCalendar.get(Calendar.DAY_OF_WEEK);
         if(bundle != null){
@@ -49,15 +41,14 @@ public class TodayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.content_fragment,container,false);
-
-        mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar);
-        mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
+        final ProgressBar mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar);
+        RecyclerView mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
         mRecyclerView.setBackgroundColor(getResources().getColor(R.color.colorGray));
-        llm = new LinearLayoutManager(getContext());
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(llm);
-        checkRoot(l,day_of_week);
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        mAdapter = new FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder>(
+        checkRoot(l, day_of_week);
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder> mAdapter = new FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder>(
                 Subject.class,
                 R.layout.subject_card,
                 SubjectAdapter.MyViewHolder.class,

@@ -5,20 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import java.util.List;
 
 /**
  * Created by Nix on 03.01.2017.
  */
 
-public class HomeWorkAdapter extends RecyclerView.Adapter<HomeWorkAdapter.MyViewHolderHomeWork> {
+class HomeWorkAdapter extends RecyclerView.Adapter<HomeWorkAdapter.MyViewHolderHomeWork> {
 
     private List<HomeworkItem> mHomeworkItems;
 
-    public static class MyViewHolderHomeWork extends RecyclerView.ViewHolder{
-        public TextView descr;
-        public MyViewHolderHomeWork(View view) {
+    static class MyViewHolderHomeWork extends RecyclerView.ViewHolder{
+        TextView descr;
+        MyViewHolderHomeWork(View view) {
             super(view);
             descr = (TextView) view.findViewById(R.id.textview_card_homework);
         }

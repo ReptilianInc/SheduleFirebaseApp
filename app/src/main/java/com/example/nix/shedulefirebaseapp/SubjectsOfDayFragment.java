@@ -50,7 +50,7 @@ public class SubjectsOfDayFragment extends Fragment {
         return v;
     }
     private class MyAdapter extends FragmentPagerAdapter{
-        public MyAdapter(FragmentManager fm){
+        MyAdapter(FragmentManager fm){
             super(fm);
         }
         @Override

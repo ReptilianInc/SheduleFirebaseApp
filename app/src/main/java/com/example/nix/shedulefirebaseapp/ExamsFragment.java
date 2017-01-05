@@ -19,13 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class ExamsFragment extends Fragment {
-    private DatabaseReference mDatabaseReference;
-    private FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder> mAdapter;
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager llm;
-    private ProgressBar mProgressBar;
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +28,13 @@ public class ExamsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.content_fragment,container,false);
-
-        mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar);
-        mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
+        final ProgressBar mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar);
+        RecyclerView mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
         mRecyclerView.setBackgroundColor(getResources().getColor(R.color.colorGray));
-        llm = new LinearLayoutManager(getContext());
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(llm);
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        mAdapter = new FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder>(
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder> mAdapter = new FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder>(
                 Subject.class,
                 R.layout.subject_card,
                 SubjectAdapter.MyViewHolder.class,

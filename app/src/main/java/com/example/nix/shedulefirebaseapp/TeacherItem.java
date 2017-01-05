@@ -3,7 +3,10 @@ package com.example.nix.shedulefirebaseapp;
 /**
  * Created by Nix on 03.01.2017.
  */
-
+/**
+ * лучше тут ничего не трогать. хоть Lint и говорит что это конструктор по умолчанию не используется,
+ * но если его убрать, будет ошибка
+ */
 public class TeacherItem {
     private String mName;
     private String mAbout;

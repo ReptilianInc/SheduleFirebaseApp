@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -19,12 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class TeachersFragment extends Fragment {
-    private DatabaseReference mDatabaseReference;
-    private FirebaseRecyclerAdapter<TeacherItem, TeacherAdapter.MyViewHolderTeacher> mAdapter;
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager llm;
-    private ProgressBar mProgressBar;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +27,13 @@ public class TeachersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.content_fragment,container,false);
-
-        mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar);
-        mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
+        final ProgressBar mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar);
+        RecyclerView mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
         mRecyclerView.setBackgroundColor(getResources().getColor(R.color.colorWhite));
-        llm = new LinearLayoutManager(getContext());
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(llm);
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        mAdapter = new FirebaseRecyclerAdapter<TeacherItem, TeacherAdapter.MyViewHolderTeacher>(
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseRecyclerAdapter<TeacherItem, TeacherAdapter.MyViewHolderTeacher> mAdapter = new FirebaseRecyclerAdapter<TeacherItem, TeacherAdapter.MyViewHolderTeacher>(
                 TeacherItem.class,
                 R.layout.teacher_card,
                 TeacherAdapter.MyViewHolderTeacher.class,

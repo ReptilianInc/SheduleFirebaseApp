@@ -4,10 +4,14 @@ package com.example.nix.shedulefirebaseapp;
  * Created by Nix on 03.01.2017.
  */
 
-public class HomeworkItem {
+/**
+ * лучше тут ничего не трогать. хоть Lint и говорит что это конструктор по умолчанию не используется,
+ * но если его убрать, будет ошибка
+ */
+class HomeworkItem {
     private String mDescription;
 
-    public HomeworkItem() {  //не трогать!!! он нужен для firebase!
+    public HomeworkItem() {
 
     }
 
@@ -15,7 +19,7 @@ public class HomeworkItem {
         mDescription = description;
     }
 
-    public String getDescription() {
+    String getDescription() {
         return mDescription;
     }
 
