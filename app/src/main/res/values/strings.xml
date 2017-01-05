@@ -22,9 +22,10 @@
     <string name="thursday">Четверг</string>
     <string name="friday">Пятница</string>
     <string name="saturday">Суббота</string>
+    <string name="about_button">О программе</string>
     ///
     <string name="home_button">На сегодня</string>
     //кнопка на toolbar для того, чтобы открыть раписание на сегодня
-    <string name="about_button">О программе</string>
-    //кнопка на toolbar для того, чтобы открыть окно о программе
+    <string name="alert_text">Не удалось подключиться к базе данных. Проверьте подключение к сети.</string>
+    <string name="no_info_text">Подключаюсь к базе данных&#8230;</string>
 </resources>

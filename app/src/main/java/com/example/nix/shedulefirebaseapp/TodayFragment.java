@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +42,6 @@ public class TodayFragment extends Fragment {
         day_of_week = mCalendar.get(Calendar.DAY_OF_WEEK);
         if(bundle != null){
             l = bundle.getLong(MainActivity.WEEK, 0);
-            Log.d("l in TodayFragment", l.toString());
-        }else{
-            Log.d("TodayFragment: ","bundle is null");
         }
     }
 

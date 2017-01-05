@@ -1,6 +1,9 @@
 package com.example.nix.shedulefirebaseapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -10,7 +13,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.Calendar;
 import java.util.Date;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseReference = mDatabase.getReference();
     private Long week_number; //переменная для счёта недели
     private int VISIBILITY = 0;
+    private boolean isNetworkAvailable(){
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,29 +61,49 @@ public class MainActivity extends AppCompatActivity {
         week_of_year = mCalendar.get(Calendar.WEEK_OF_YEAR);
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        fm = getSupportFragmentManager();
+        fragment = fm.findFragmentById(R.id.containerView);
+        fragment = new NoInfoFragment();
+        fm.beginTransaction()
+                .add(R.id.containerView,fragment)
+                .commit();
+
         mToolbar.setTitle("Сегодня");
-        mDatabaseReference.child("weeknumber").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                week_number = (Long)dataSnapshot.getValue() - week_of_year + 1;
-                Log.d("week_number ", week_number.toString());
-                mBundleWeek.putLong(WEEK, week_number);
-                mToolbar.setSubtitle(week_number.toString() + " неделя");
-                fm = getSupportFragmentManager();
-                fragment = fm.findFragmentById(R.id.containerView);
-                fragment = new TodayFragment();
-                fragment.setArguments(mBundleWeek);
-                fm.beginTransaction()
-                        .add(R.id.containerView,fragment)
-                        .commit();
-            }
+        if (isNetworkAvailable()){
+            mDatabaseReference.child("weeknumber").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    week_number = (long)week_of_year - (Long)dataSnapshot.getValue() + 1l;
+                    mBundleWeek.putLong(WEEK, week_number);
+                    mToolbar.setSubtitle(week_number.toString() + " неделя");
+                    fm = getSupportFragmentManager();
+                    fm.beginTransaction()
+                            .remove(fragment)
+                            .commit();
+                    fragment = new TodayFragment();
+                    fragment.setArguments(mBundleWeek);
+                    fm.beginTransaction()
+                            .add(R.id.containerView,fragment)
+                            .commit();
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }else{
+            mToolbar.setSubtitle("Ошибка!");
+            fm = getSupportFragmentManager();
+            fm.beginTransaction()
+                    .remove(fragment)
+                    .commit();
+            fragment = fm.findFragmentById(R.id.containerView);
+            fragment = new NoNetworkFragment();
+            fm.beginTransaction()
+                    .add(R.id.containerView,fragment)
+                    .commit();
+        }
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView)findViewById(R.id.navigationView);
@@ -86,128 +113,218 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.closeDrawers();
                 switch (menuItem.getItemId()){
                     case R.id.md:
-                        fm.beginTransaction()
-                                .remove(fragment)
-                                .commit();
                         mToolbar.setTitle("Понедельник");
-                        day = 0;
-                        mBundle.putInt(DATA, day);
-                        fragment = new SubjectsOfDayFragment();
-                        fragment.setArguments(mBundle);
-                        fm.beginTransaction()
-                                .add(R.id.containerView, fragment)
-                                .commit();
+                        if(isNetworkAvailable()){
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            day = 0;
+                            mBundle.putInt(DATA, day);
+                            fragment = new SubjectsOfDayFragment();
+                            fragment.setArguments(mBundle);
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }else{
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new NoNetworkFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }
                         VISIBILITY = 1;
                         invalidateOptionsMenu();
                         return true;
                     case R.id.tud:
-                        fm.beginTransaction()
-                                .remove(fragment)
-                                .commit();
                         mToolbar.setTitle("Вторник");
-                        day = 1;
-                        mBundle.putInt(DATA, day);
-                        fragment = new SubjectsOfDayFragment();
-                        fragment.setArguments(mBundle);
-                        fm.beginTransaction()
-                                .add(R.id.containerView, fragment)
-                                .commit();
+                        if(isNetworkAvailable()){
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            day = 1;
+                            mBundle.putInt(DATA, day);
+                            fragment = new SubjectsOfDayFragment();
+                            fragment.setArguments(mBundle);
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }else {
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new NoNetworkFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }
                         VISIBILITY = 1;
                         invalidateOptionsMenu();
                         return true;
                     case R.id.wd:
-                        fm.beginTransaction()
-                                .remove(fragment)
-                                .commit();
                         mToolbar.setTitle("Среда");
-                        day = 2;
-                        mBundle.putInt(DATA, day);
-                        fragment = new SubjectsOfDayFragment();
-                        fragment.setArguments(mBundle);
-                        fm.beginTransaction()
-                                .add(R.id.containerView, fragment)
-                                .commit();
+                        if(isNetworkAvailable()){
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            day = 2;
+                            mBundle.putInt(DATA, day);
+                            fragment = new SubjectsOfDayFragment();
+                            fragment.setArguments(mBundle);
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }else {
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new NoNetworkFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }
                         VISIBILITY = 1;
                         invalidateOptionsMenu();
                         return true;
                     case R.id.thd:
-                        fm.beginTransaction()
-                                .remove(fragment)
-                                .commit();
                         mToolbar.setTitle("Четверг");
-                        day = 3;
-                        mBundle.putInt(DATA, day);
-                        fragment = new SubjectsOfDayFragment();
-                        fragment.setArguments(mBundle);
-                        fm.beginTransaction()
-                                .add(R.id.containerView, fragment)
-                                .commit();
+                        if(isNetworkAvailable()){
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            day = 3;
+                            mBundle.putInt(DATA, day);
+                            fragment = new SubjectsOfDayFragment();
+                            fragment.setArguments(mBundle);
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }else {
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new NoNetworkFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }
                         VISIBILITY = 1;
                         invalidateOptionsMenu();
                         return true;
                     case R.id.fd:
-                        fm.beginTransaction()
-                                .remove(fragment)
-                                .commit();
                         mToolbar.setTitle("Пятница");
-                        day = 4;
-                        mBundle.putInt(DATA, day);
-                        fragment = new SubjectsOfDayFragment();
-                        fragment.setArguments(mBundle);
-                        fm.beginTransaction()
-                                .add(R.id.containerView, fragment)
-                                .commit();
+                        if (isNetworkAvailable()){
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            day = 4;
+                            mBundle.putInt(DATA, day);
+                            fragment = new SubjectsOfDayFragment();
+                            fragment.setArguments(mBundle);
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }else {
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new NoNetworkFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }
                         VISIBILITY = 1;
                         invalidateOptionsMenu();
                         return true;
                     case R.id.sd:
-                        fm.beginTransaction()
-                                .remove(fragment)
-                                .commit();
                         mToolbar.setTitle("Суббота");
-                        day = 5;
-                        mBundle.putInt(DATA, day);
-                        fragment = new SubjectsOfDayFragment();
-                        fragment.setArguments(mBundle);
-                        fm.beginTransaction()
-                                .add(R.id.containerView, fragment)
-                                .commit();
+                        if (isNetworkAvailable()){
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            day = 5;
+                            mBundle.putInt(DATA, day);
+                            fragment = new SubjectsOfDayFragment();
+                            fragment.setArguments(mBundle);
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }else {
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new NoNetworkFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }
                         VISIBILITY = 1;
                         invalidateOptionsMenu();
                         return true;
                     case R.id.hw:
-                        fm.beginTransaction()
-                                .remove(fragment)
-                                .commit();
                         mToolbar.setTitle("Домашнее задание");
-                        fragment = new HomeWorkFragment();
-                        fm.beginTransaction()
-                                .add(R.id.containerView, fragment)
-                                .commit();
+                        if (isNetworkAvailable()){
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new HomeWorkFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }else {
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new NoNetworkFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }
                         VISIBILITY = 1;
                         invalidateOptionsMenu();
                         return true;
                     case R.id.teach:
-                        fm.beginTransaction()
-                                .remove(fragment)
-                                .commit();
                         mToolbar.setTitle("Преподаватели");
-                        fragment = new TeachersFragment();
-                        fm.beginTransaction()
-                                .add(R.id.containerView, fragment)
-                                .commit();
+                        if (isNetworkAvailable()){
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new TeachersFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }else {
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new NoNetworkFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }
                         VISIBILITY = 1;
                         invalidateOptionsMenu();
                         return true;
                     case R.id.ex:
-                        fm.beginTransaction()
-                                .remove(fragment)
-                                .commit();
                         mToolbar.setTitle("Экзамены");
-                        fragment = new ExamsFragment();
-                        fm.beginTransaction()
-                                .add(R.id.containerView, fragment)
-                                .commit();
+                        if (isNetworkAvailable()){
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new ExamsFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }else {
+                            fm.beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                            fragment = new NoNetworkFragment();
+                            fm.beginTransaction()
+                                    .add(R.id.containerView, fragment)
+                                    .commit();
+                        }
                         VISIBILITY = 1;
                         invalidateOptionsMenu();
                         return true;
@@ -242,17 +359,26 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.home_button:
-                VISIBILITY = 0;
-                fm.beginTransaction()
-                        .remove(fragment)
-                        .commit();
                 mToolbar.setTitle("Сегодня");
-                fragment = new TodayFragment();
-                Log.d("week_number ", week_number.toString());
-                fragment.setArguments(mBundleWeek);
-                fm.beginTransaction()
-                        .add(R.id.containerView, fragment)
-                        .commit();
+                VISIBILITY = 0;
+                if(isNetworkAvailable()){
+                    fm.beginTransaction()
+                            .remove(fragment)
+                            .commit();
+                    fragment = new TodayFragment();
+                    fragment.setArguments(mBundleWeek);
+                    fm.beginTransaction()
+                            .add(R.id.containerView, fragment)
+                            .commit();
+                }else{
+                    fm.beginTransaction()
+                            .remove(fragment)
+                            .commit();
+                    fragment = new NoNetworkFragment();
+                    fm.beginTransaction()
+                            .add(R.id.containerView, fragment)
+                            .commit();
+                }
                 mDrawerLayout.closeDrawers();
                 invalidateOptionsMenu();
                 break;
