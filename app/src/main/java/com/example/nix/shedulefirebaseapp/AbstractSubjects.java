@@ -41,7 +41,7 @@ public abstract class AbstractSubjects extends Fragment {
                 viewHolder.teacher.setText(model.getTeacher());
             }
         };
-
+        mDatabaseReference.keepSynced(true);
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {

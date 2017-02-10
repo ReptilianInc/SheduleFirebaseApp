@@ -44,7 +44,7 @@ public class HomeWorkFragment extends Fragment {
                 viewHolder.descr.setText(model.getDescription());
             }
         };
-
+        mDatabaseReference.keepSynced(true);
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {

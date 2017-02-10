@@ -46,7 +46,7 @@ public class TeachersFragment extends Fragment {
                 viewHolder.about.setText(model.getAbout());
             }
         };
-
+        mDatabaseReference.keepSynced(true);
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {

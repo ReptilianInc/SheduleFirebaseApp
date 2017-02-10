@@ -63,7 +63,7 @@ public class TodayFragment extends Fragment {
                 viewHolder.teacher.setText(model.getTeacher());
             }
         };
-
+        mDatabaseReference.keepSynced(true);
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -96,7 +96,7 @@ public class TodayFragment extends Fragment {
                     ROOT = "saturdayodd";
                     break;
                 default:
-                    ROOT = "mondayodd";
+                    ROOT = "sunday";
                     break;
             }
         }
@@ -121,7 +121,7 @@ public class TodayFragment extends Fragment {
                     ROOT = "saturdayeven";
                     break;
                 default:
-                    ROOT = "mondayeven";
+                    ROOT = "sunday";
                     break;
             }
         }

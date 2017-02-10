@@ -5,7 +5,7 @@
     android:id="@+id/relative_layout_homework_card"
     android:layout_margin="4dp"
     android:background="@color/colorWhite"
-    android:elevation="4dp">
+    android:elevation="2dp">
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
