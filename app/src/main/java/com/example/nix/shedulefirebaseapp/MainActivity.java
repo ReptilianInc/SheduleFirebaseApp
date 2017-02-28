@@ -1,10 +1,7 @@
 package com.example.nix.shedulefirebaseapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -38,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabaseReference = mDatabase.getReference();
     private Long week_number; //переменная для счёта недели
-    private int VISIBILITY = 0;
+    private int VISIBILITY = 0; //переменная-триггер видимости кнопки "Домой"
     //коды дней
     private final int MONDAY = 0;
     private final int TUESDAY = 1;
@@ -66,26 +63,7 @@ public class MainActivity extends AppCompatActivity {
         fm.beginTransaction()
                 .add(R.id.containerView,fragment)
                 .commitAllowingStateLoss();
-        mToolbar.setTitle("Сегодня");
-            mDatabaseReference.child("weeknumber").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    week_number = (long)week_of_year - (Long)dataSnapshot.getValue() + 1L;
-                    mBundleWeek.putLong(WEEK, week_number);
-                    mToolbar.setSubtitle(week_number.toString() + " неделя");
-                    fm = getSupportFragmentManager();
-                    fragment = new TodayFragment();
-                    fragment.setArguments(mBundleWeek);
-                    fm.beginTransaction()
-                            .replace(R.id.containerView,fragment)
-                            .commitAllowingStateLoss();
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+        setTodayFragment();
         mDatabaseReference.keepSynced(true);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
         NavigationView mNavigationView = (NavigationView)findViewById(R.id.navigationView);
@@ -151,15 +129,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.home_button:
-                mToolbar.setTitle("Сегодня");
-                VISIBILITY = 0;
-                    fragment = new TodayFragment();
-                    fragment.setArguments(mBundleWeek);
-                    fm.beginTransaction()
-                            .replace(R.id.containerView, fragment)
-                            .commitAllowingStateLoss();
+                setTodayFragment();
                 mDrawerLayout.closeDrawers();
                 invalidateOptionsMenu();
+                VISIBILITY = 0;
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -197,5 +170,27 @@ public class MainActivity extends AppCompatActivity {
                     .commitAllowingStateLoss();
         VISIBILITY = 1;
         invalidateOptionsMenu();
+    }
+    private void setTodayFragment(){
+        mToolbar.setTitle("Сегодня");
+        mDatabaseReference.child("weeknumber").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                week_number = (long)week_of_year - (Long)dataSnapshot.getValue() + 1L;
+                mBundleWeek.putLong(WEEK, week_number);
+                mToolbar.setSubtitle(week_number.toString() + " неделя");
+                fm = getSupportFragmentManager();
+                fragment = new TodayFragment();
+                fragment.setArguments(mBundleWeek);
+                fm.beginTransaction()
+                        .replace(R.id.containerView,fragment)
+                        .commitAllowingStateLoss();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //do nothing
+            }
+        });
     }
 }
