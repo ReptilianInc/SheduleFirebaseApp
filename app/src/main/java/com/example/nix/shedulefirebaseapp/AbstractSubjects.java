@@ -1,8 +1,13 @@
 package com.example.nix.shedulefirebaseapp;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -17,14 +22,27 @@ import com.google.firebase.database.FirebaseDatabase;
 **/
 
 public abstract class AbstractSubjects extends Fragment {
-    protected abstract void checkRoot(int code);
+    protected abstract void setRoot(int code);
     protected String ROOT = "";
     protected int i;
-    protected void initializeUI(RecyclerView recyclerView, final ProgressBar pb){
-        recyclerView.setBackgroundColor(getResources().getColor(R.color.colorGray));
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            i = bundle.getInt(SubjectsOfDayFragment.DAY, 0);
+        }
+    }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.content_fragment,container,false);
+        final ProgressBar mProgressBar = (ProgressBar)v.findViewById(R.id.progressBar);
+        RecyclerView mRecyclerView = (RecyclerView)v.findViewById(R.id.recycler_view);
+        mRecyclerView.setBackgroundColor(getResources().getColor(R.color.colorGray));
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(llm);
-        checkRoot(i);
+        mRecyclerView.setLayoutManager(llm);
+        setRoot(i);
         DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder> mAdapter = new FirebaseRecyclerAdapter<Subject, SubjectAdapter.MyViewHolder>(
                 Subject.class,
@@ -34,7 +52,7 @@ public abstract class AbstractSubjects extends Fragment {
         ) {
             @Override
             protected void populateViewHolder(SubjectAdapter.MyViewHolder viewHolder, Subject model, int position) {
-                pb.setVisibility(ProgressBar.INVISIBLE);
+                mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                 viewHolder.title.setText(model.getTitle());
                 viewHolder.room.setText(model.getRoom());
                 viewHolder.time.setText(model.getTime());
@@ -48,7 +66,8 @@ public abstract class AbstractSubjects extends Fragment {
                 super.onItemRangeInserted(positionStart, itemCount);
             }
         });
-        recyclerView.setLayoutManager(llm);
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(llm);
+        mRecyclerView.setAdapter(mAdapter);
+        return v;
     }
 }

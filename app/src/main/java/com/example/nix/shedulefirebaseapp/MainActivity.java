@@ -39,12 +39,13 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseReference = mDatabase.getReference();
     private Long week_number; //переменная для счёта недели
     private int VISIBILITY = 0;
-    private boolean isNetworkAvailable(){
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
+    //коды дней
+    private final int MONDAY = 0;
+    private final int TUESDAY = 1;
+    private final int WEDNESDAY = 2;
+    private final int THURSDAY = 3;
+    private final int FRIDAY = 4;
+    private final int SATURDAY = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.containerView,fragment)
                 .commitAllowingStateLoss();
         mToolbar.setTitle("Сегодня");
-        /*if (isNetworkAvailable()){*/
             mDatabaseReference.child("weeknumber").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -83,20 +83,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
+
                 }
             });
-        /*}else{
-            mToolbar.setSubtitle("Ошибка!");
-            fm = getSupportFragmentManager();
-            fm.beginTransaction()
-                    .remove(fragment)
-                    .commitAllowingStateLoss();
-            fragment = fm.findFragmentById(R.id.containerView);
-            fragment = new NoNetworkFragment();
-            fm.beginTransaction()
-                    .add(R.id.containerView,fragment)
-                    .commitAllowingStateLoss();
-        }*/
         mDatabaseReference.keepSynced(true);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
         NavigationView mNavigationView = (NavigationView)findViewById(R.id.navigationView);
@@ -106,22 +95,22 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.closeDrawers();
                 switch (menuItem.getItemId()){
                     case R.id.md:
-                        loadSubjectsOfDayFragment("Понедельник", 0);
+                        loadSubjectsOfDayFragment("Понедельник", MONDAY);
                         return true;
                     case R.id.tud:
-                        loadSubjectsOfDayFragment("Вторник", 1);
+                        loadSubjectsOfDayFragment("Вторник", TUESDAY);
                         return true;
                     case R.id.wd:
-                        loadSubjectsOfDayFragment("Среда", 2);
+                        loadSubjectsOfDayFragment("Среда", WEDNESDAY);
                         return true;
                     case R.id.thd:
-                        loadSubjectsOfDayFragment("Четверг", 3);
+                        loadSubjectsOfDayFragment("Четверг", THURSDAY);
                         return true;
                     case R.id.fd:
-                        loadSubjectsOfDayFragment("Пятница", 4);
+                        loadSubjectsOfDayFragment("Пятница", FRIDAY);
                         return true;
                     case R.id.sd:
-                        loadSubjectsOfDayFragment("Суббота", 5);
+                        loadSubjectsOfDayFragment("Суббота", SATURDAY);
                         return true;
                     case R.id.hw:
                         loadAnotherFragments("Домашнее задание");
@@ -164,21 +153,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.home_button:
                 mToolbar.setTitle("Сегодня");
                 VISIBILITY = 0;
-                /*if(isNetworkAvailable()){*/
                     fragment = new TodayFragment();
                     fragment.setArguments(mBundleWeek);
                     fm.beginTransaction()
                             .replace(R.id.containerView, fragment)
                             .commitAllowingStateLoss();
-                /*}else{
-                    fm.beginTransaction()
-                            .remove(fragment)
-                            .commitAllowingStateLoss();
-                    fragment = new NoNetworkFragment();
-                    fm.beginTransaction()
-                            .add(R.id.containerView, fragment)
-                            .commitAllowingStateLoss();
-                }*/
                 mDrawerLayout.closeDrawers();
                 invalidateOptionsMenu();
                 break;
@@ -187,22 +166,12 @@ public class MainActivity extends AppCompatActivity {
     }
     private void loadSubjectsOfDayFragment(String toolbarTitle, int code_of_day){
         mToolbar.setTitle(toolbarTitle);
-        /*if(isNetworkAvailable()){*/
             mBundle.putInt(DATA, code_of_day);
             fragment = new SubjectsOfDayFragment();
             fragment.setArguments(mBundle);
             fm.beginTransaction()
                     .replace(R.id.containerView, fragment)
                     .commitAllowingStateLoss();
-       /* }else{
-            fm.beginTransaction()
-                    .remove(fragment)
-                    .commitAllowingStateLoss();
-            fragment = new NoNetworkFragment();
-            fm.beginTransaction()
-                    .add(R.id.containerView, fragment)
-                    .commitAllowingStateLoss();
-        }*/
         VISIBILITY = 1;
         invalidateOptionsMenu();
     }
@@ -226,15 +195,6 @@ public class MainActivity extends AppCompatActivity {
             fm.beginTransaction()
                     .replace(R.id.containerView, fragment)
                     .commitAllowingStateLoss();
-        /*}else {
-            fm.beginTransaction()
-                    .remove(fragment)
-                    .commitAllowingStateLoss();
-            fragment = new NoNetworkFragment();
-            fm.beginTransaction()
-                    .add(R.id.containerView, fragment)
-                    .commitAllowingStateLoss();
-        }*/
         VISIBILITY = 1;
         invalidateOptionsMenu();
     }
